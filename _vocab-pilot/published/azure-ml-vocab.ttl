@@ -1,0 +1,628 @@
+@prefix : <https://vocab.example.org/azure-ml/> .
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+
+<https://vocab.example.org/azure-ml/> a owl:Ontology .
+
+:scheme a skos:ConceptScheme;
+  skos:prefLabel "Azure Machine Learning documentation vocabulary (pilot)"@en;
+  dct:created "2026-10-11";
+  skos:editorialNote "Draft generated from term extraction of articles/machine-learning in azure-ai-docs. All concepts need review."@en;
+  skos:hasTopConcept :workspace, :studio, :prompt-flow, :dev-tools, :compute, :data,
+    :job, :hpo, :automl, :component, :environment, :model, :endpoint, :deployment, :scoring-script,
+    :inference-server, :security, :azure-deps, :ml-task, :rai .
+
+:workspace a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "workspace"@en;
+  skos:altLabel "Azure Machine Learning workspace"@en;
+  skos:hiddenLabel "Workspace"@en;
+  skos:topConceptOf :scheme;
+  skos:editorialNote "Pilot count: appears in 388 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:related :azure-deps;
+  skos:definition "The top-level resource for Azure Machine Learning. It provides a central place to work with the jobs, assets, and resources you create, and it keeps a history of all jobs."@en;
+  skos:scopeNote "Use for the Azure Machine Learning resource itself. For a feature store or hub, which are workspace types, use their own concepts where they exist."@en .
+
+:studio a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "Azure Machine Learning studio"@en;
+  skos:altLabel "studio"@en, "studio UI"@en, "Machine Learning studio"@en;
+  skos:hiddenLabel "Azure Machine Learning Studio"@en;
+  skos:topConceptOf :scheme;
+  skos:narrower :designer;
+  skos:editorialNote "Pilot count: appears in 314 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "The web-based interface for Azure Machine Learning, used to manage a workspace and its jobs, assets, and compute."@en;
+  skos:scopeNote "Use for the browser interface. Don't use for the workspace it manages."@en .
+
+:designer a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "designer"@en;
+  skos:altLabel "Azure Machine Learning designer"@en, "drag-and-drop designer"@en;
+  skos:hiddenLabel "Azure Machine Learning Designer"@en;
+  skos:broader :studio;
+  skos:editorialNote "Pilot count: appears in 124 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A drag-and-drop interface in Azure Machine Learning studio for building machine learning pipelines from components."@en;
+  skos:scopeNote "Use for the visual pipeline builder only. For pipelines built in code or YAML, use pipeline job."@en .
+
+:prompt-flow a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "prompt flow"@en;
+  skos:hiddenLabel "Prompt Flow"@en, "Prompt flow"@en;
+  skos:topConceptOf :scheme;
+  skos:editorialNote "Pilot count: appears in 67 of 670 articles in articles/machine-learning (any label)."@en,
+    "Decide capitalization: 'prompt flow' (59 articles) vs 'Prompt flow/Prompt Flow' (42 articles)."@en;
+  skos:definition "A development tool in Azure Machine Learning for building, testing, and deploying applications that call large language models. A flow is a sequence of nodes that process input and produce output."@en;
+  skos:scopeNote "Use for the tool and for flows built with it. Capitalization is still to be decided."@en .
+
+:dev-tools a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "developer tools"@en;
+  skos:topConceptOf :scheme;
+  skos:narrower :azure-cli, :python-sdk, :vs-code, :rest-api, :yaml-schema;
+  skos:editorialNote "Grouping concept created for the pilot hierarchy."@en;
+  skos:definition "Grouping of the command-line tools, SDKs, editors, and APIs used to work with Azure Machine Learning."@en;
+  skos:scopeNote "Grouping concept for the pilot hierarchy. Not a product term; don't tag articles with it or use it in prose."@en .
+
+:azure-cli a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "Azure CLI"@en;
+  skos:broader :dev-tools;
+  skos:narrower :ml-cli;
+  skos:editorialNote "Pilot count: appears in 186 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "The cross-platform command-line tool for managing Azure resources."@en;
+  skos:scopeNote "Use for the base Azure CLI. For the Azure Machine Learning commands, use Azure Machine Learning CLI extension."@en .
+
+:ml-cli a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "Azure Machine Learning CLI extension"@en;
+  skos:altLabel "CLI v2"@en, "Azure Machine Learning CLI"@en, "ml extension"@en;
+  skos:broader :azure-cli;
+  skos:editorialNote "Pilot count: appears in 206 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:related :yaml-schema;
+  skos:definition "The ml extension to the Azure CLI, which adds commands for Azure Machine Learning workspaces, jobs, and assets. Also called CLI v2."@en;
+  skos:scopeNote "Use for CLI v2 commands. Don't use for the base Azure CLI or for the retired v1 CLI extension."@en .
+
+:python-sdk a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "Azure Machine Learning Python SDK"@en;
+  skos:altLabel "Python SDK"@en, "Azure Machine Learning SDK"@en;
+  skos:hiddenLabel "python-sdk"@en;
+  skos:broader :dev-tools;
+  skos:narrower :sdk-v2, :sdk-v1;
+  skos:editorialNote "Pilot count: appears in 232 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "The Python library for working with Azure Machine Learning from code."@en;
+  skos:scopeNote "Use when the version doesn't matter. When it does, use Python SDK v2 or Python SDK v1."@en .
+
+:sdk-v2 a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "Python SDK v2"@en;
+  skos:altLabel "SDK v2"@en;
+  skos:hiddenLabel "SDK V2"@en, "Python SDK V2"@en;
+  skos:broader :python-sdk;
+  skos:editorialNote "Pilot count: appears in 134 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "The current version of the Azure Machine Learning Python SDK, provided by the azure-ai-ml package. It works with the same assets and jobs as CLI v2."@en;
+  skos:scopeNote "Use for current Python guidance. Prefer this concept over the general Python SDK concept when an article shows code."@en .
+
+:sdk-v1 a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "Python SDK v1"@en;
+  skos:altLabel "SDK v1"@en;
+  skos:hiddenLabel "SDK V1"@en;
+  skos:broader :python-sdk;
+  skos:editorialNote "Pilot count: appears in 55 of 670 articles in articles/machine-learning (any label)."@en,
+    "Legacy version. Decide whether to keep as a concept or record only as a note."@en;
+  skos:definition "The earlier version of the Azure Machine Learning Python SDK, provided by the azureml-core package. SDK v2 replaces it."@en;
+  skos:scopeNote "Use only in migration and legacy content. Don't use for new guidance."@en .
+
+:vs-code a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "Visual Studio Code"@en;
+  skos:altLabel "VS Code"@en;
+  skos:broader :dev-tools;
+  skos:editorialNote "Pilot count: appears in 108 of 670 articles in articles/machine-learning (any label)."@en,
+    "Both forms appear in 65 articles each. Pick one as preferred."@en;
+  skos:definition "A code editor from Microsoft. With the Azure Machine Learning extension, you can manage workspace resources and run jobs from the editor."@en;
+  skos:scopeNote "Use for the editor and its Azure Machine Learning extension. The preferred label is still to be decided."@en .
+
+:rest-api a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "REST API"@en;
+  skos:hiddenLabel "rest-api"@en;
+  skos:broader :dev-tools;
+  skos:editorialNote "Pilot count: appears in 50 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "The HTTP interface for creating and managing Azure Machine Learning resources, jobs, and assets."@en;
+  skos:scopeNote "Use for direct REST calls. For calls to a deployed model, use endpoint."@en .
+
+:yaml-schema a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "YAML schema"@en;
+  skos:altLabel "YAML syntax"@en;
+  skos:hiddenLabel "yaml syntax"@en;
+  skos:broader :dev-tools;
+  skos:related :ml-cli;
+  skos:editorialNote "Pilot count: appears in 100 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "The published schemas that define the structure of the YAML files CLI v2 uses to describe jobs, assets, endpoints, and compute."@en;
+  skos:scopeNote "Use for the YAML file format and its schemas. For the commands that use them, use Azure Machine Learning CLI extension."@en .
+
+:compute a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "compute resource"@en;
+  skos:altLabel "compute target"@en, "compute"@en;
+  skos:topConceptOf :scheme;
+  skos:narrower :compute-instance, :compute-cluster, :dsvm;
+  skos:editorialNote "Pilot count: appears in 332 of 670 articles in articles/machine-learning (any label)."@en,
+    "'compute target' is the older term. Confirm preferred label."@en;
+  skos:definition "A designated compute resource where you run a job or host an endpoint, such as a compute cluster, a compute instance, a Kubernetes cluster, or attached compute."@en;
+  skos:scopeNote "Use as the general term. Use the narrower concepts for specific types. 'compute target' is the older term; prefer this concept."@en .
+
+:compute-instance a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "compute instance"@en;
+  skos:altLabel "notebook VM"@en;
+  skos:hiddenLabel "Compute Instance"@en;
+  skos:broader :compute;
+  skos:editorialNote "Pilot count: appears in 131 of 670 articles in articles/machine-learning (any label)."@en,
+    "'notebook VM' is a retired name (1 article)."@en;
+  skos:definition "A fully managed, cloud-based workstation for developing and testing machine learning code."@en;
+  skos:scopeNote "Use for the single-user development workstation. For scalable training compute, use compute cluster."@en .
+
+:compute-cluster a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "compute cluster"@en;
+  skos:altLabel "training cluster"@en, "AmlCompute"@en;
+  skos:hiddenLabel "Compute Cluster"@en;
+  skos:broader :compute;
+  skos:editorialNote "Pilot count: appears in 128 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A managed compute resource that creates a cluster of CPU or GPU nodes in the cloud, sized to the workload. You can share it with other users in the workspace."@en;
+  skos:scopeNote "Use for training and batch compute that scales out. For a single development machine, use compute instance."@en .
+
+:dsvm a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "Data Science Virtual Machine"@en;
+  skos:altLabel "DSVM"@en;
+  skos:hiddenLabel "data science virtual machine"@en;
+  skos:broader :compute;
+  skos:editorialNote "Pilot count: appears in 31 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "An Azure virtual machine image preloaded with data science and machine learning tools. Unlike a compute instance, Azure Machine Learning doesn't manage it."@en;
+  skos:scopeNote "Use only for the virtual machine image. For a managed workstation, use compute instance."@en .
+
+:data a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "data management"@en;
+  skos:topConceptOf :scheme;
+  skos:narrower :data-asset, :datastore, :feature-store, :dataset;
+  skos:editorialNote "Grouping concept created for the pilot hierarchy."@en;
+  skos:definition "Grouping of the concepts for storing, referencing, and preparing data in Azure Machine Learning."@en;
+  skos:scopeNote "Grouping concept for the pilot hierarchy. Not a product term; don't tag articles with it or use it in prose."@en .
+
+:data-asset a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "data asset"@en;
+  skos:broader :data;
+  skos:hiddenLabel "Data asset"@en;
+  skos:related :dataset;
+  skos:editorialNote "Pilot count: appears in 86 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "An object registered in an Azure Machine Learning workspace that references data stored elsewhere, so jobs and users can access the data through the asset."@en;
+  skos:scopeNote "Use only for the registered workspace object. For data in general, use dataset. Avoid describing a data asset as a connection, because connection is a separate workspace object."@en;
+  skos:historyNote "In SDK v1 this object was called a dataset (Dataset, TabularDataset, and FileDataset classes). Some articles still say data assets were formerly known as datasets."@en .
+
+:datastore a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "datastore"@en;
+  skos:altLabel "data store"@en;
+  skos:hiddenLabel "Datastore"@en;
+  skos:broader :data;
+  skos:editorialNote "Pilot count: appears in 117 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A reference to an existing Azure storage service that keeps the connection information, so scripts can reach the data without storing credentials in code."@en;
+  skos:scopeNote "Use for the stored connection to a storage service. For a reference to specific data, use data asset."@en .
+
+:feature-store a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "feature store"@en;
+  skos:hiddenLabel "Feature Store"@en;
+  skos:broader :data;
+  skos:editorialNote "Pilot count: appears in 21 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A workspace type for creating, managing, and sharing machine learning features across multiple project workspaces."@en;
+  skos:scopeNote "Use for the managed feature store. Don't use for features in general."@en .
+
+:job a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "job"@en;
+  skos:topConceptOf :scheme;
+  skos:narrower :training-job, :pipeline-job, :sweep-job;
+  skos:editorialNote "Pilot count: appears in 283 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A unit of work that Azure Machine Learning runs on compute, such as training a model, running a pipeline, or running a hyperparameter sweep. The workspace records each job's logs, metrics, and outputs."@en;
+  skos:scopeNote "Use as the general term. Use a narrower concept when the job type matters. 'run' and 'experiment' are SDK v1 terms."@en .
+
+:training-job a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "training job"@en;
+  skos:altLabel "command job"@en;
+  skos:broader :job;
+  skos:editorialNote "Pilot count: appears in 107 of 670 articles in articles/machine-learning (any label)."@en,
+    "'command job' added as a candidate alternate label; confirm."@en;
+  skos:definition "A job that runs a script to train a model. In SDK v2 and CLI v2, a training job is usually defined as a command job."@en;
+  skos:scopeNote "Use for single-step training. For multistep workflows, use pipeline job. For tuning runs, use sweep job."@en .
+
+:pipeline-job a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "pipeline job"@en;
+  skos:altLabel "machine learning pipeline"@en, "pipeline"@en;
+  skos:hiddenLabel "pipeline-job"@en;
+  skos:broader :job;
+  skos:related :component;
+  skos:editorialNote "Pilot count: appears in 255 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A job that runs a machine learning pipeline: a workflow that connects components to complete a machine learning task."@en;
+  skos:scopeNote "Use for machine learning pipelines. Don't use for CI/CD pipelines in Azure DevOps or GitHub Actions."@en .
+
+:sweep-job a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "sweep job"@en;
+  skos:broader :job;
+  skos:related :hpo;
+  skos:editorialNote "Pilot count: appears in 16 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A job that runs many trials of a training job, each with different hyperparameter values, and compares the results."@en;
+  skos:scopeNote "Use for the job type. For the general practice, use hyperparameter tuning."@en .
+
+:hpo a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "hyperparameter tuning"@en;
+  skos:topConceptOf :scheme;
+  skos:related :sweep-job;
+  skos:editorialNote "Pilot count: appears in 22 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "The process of finding the hyperparameter values that give the best model performance."@en;
+  skos:scopeNote "Use for the practice. For the Azure Machine Learning job that does it, use sweep job."@en .
+
+:automl a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "automated ML"@en;
+  skos:altLabel "AutoML"@en, "automated machine learning"@en;
+  skos:hiddenLabel "automated ml"@en, "Automated ML"@en;
+  skos:topConceptOf :scheme;
+  skos:editorialNote "Pilot count: appears in 90 of 670 articles in articles/machine-learning (any label)."@en,
+    "Preferred label assumes first-mention style 'automated ML (AutoML)'. Confirm."@en;
+  skos:definition "A capability in which Azure Machine Learning tries many algorithms and settings and selects the best model for your data and task."@en;
+  skos:scopeNote "Use 'automated ML (AutoML)' on first mention, then either form. The preferred label is still to be confirmed."@en .
+
+:component a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "component"@en;
+  skos:topConceptOf :scheme;
+  skos:related :pipeline-job;
+  skos:editorialNote "Pilot count: appears in 229 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A self-contained piece of code that does one step in a machine learning pipeline, such as data processing, training, or scoring. It has a name and parameters, takes input, and returns output."@en;
+  skos:scopeNote "Use for pipeline building blocks. Don't use as a general word for parts of the product."@en .
+
+:environment a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "environment"@en;
+  skos:topConceptOf :scheme;
+  skos:editorialNote "Pilot count: appears in 285 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A managed, versioned definition of the software packages, environment variables, and settings that a training or scoring script runs with."@en;
+  skos:scopeNote "Use for the Azure Machine Learning asset. Curated environments are provided by Azure Machine Learning; custom environments are defined by the user."@en .
+
+:model a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "model"@en;
+  skos:altLabel "machine learning model"@en, "trained model"@en;
+  skos:topConceptOf :scheme;
+  skos:narrower :mlflow-model;
+  skos:editorialNote "Pilot count: appears in 435 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "The files that make up a trained machine learning model, plus their metadata. A registered model is tracked in the workspace by name and version."@en;
+  skos:scopeNote "Use for trained models and registered model assets. For the saved format, use the narrower concepts such as MLflow model."@en .
+
+:mlflow-model a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "MLflow model"@en;
+  skos:hiddenLabel "MLFlow model"@en, "Mlflow model"@en;
+  skos:broader :model;
+  skos:editorialNote "Pilot count: appears in 55 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A model saved in the MLflow format, which describes its files and how to load them. Azure Machine Learning can deploy an MLflow model without a scoring script or environment."@en;
+  skos:scopeNote "Use for models in MLflow format. Write MLflow with this capitalization."@en .
+
+:endpoint a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "endpoint"@en;
+  skos:topConceptOf :scheme;
+  skos:narrower :online-endpoint, :batch-endpoint;
+  skos:editorialNote "Pilot count: appears in 287 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:related :deployment;
+  skos:definition "A stable HTTPS address that clients call to get results from deployed models or pipelines. An endpoint can host one or more deployments."@en;
+  skos:scopeNote "Use as the general term. Use online endpoint or batch endpoint when the type matters. For the hosted model, use deployment."@en .
+
+:online-endpoint a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "online endpoint"@en;
+  skos:altLabel "real-time endpoint"@en;
+  skos:hiddenLabel "online-endpoint"@en;
+  skos:broader :endpoint;
+  skos:narrower :managed-online-endpoint;
+  skos:editorialNote "Pilot count: appears in 163 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:related :online-deployment;
+  skos:definition "An endpoint for real-time scoring that returns results in a synchronous request. Online endpoints can be managed or run on Kubernetes."@en;
+  skos:scopeNote "Use for real-time scoring. 'real-time endpoint' is an older name. For large-volume asynchronous scoring, use batch endpoint."@en .
+
+:managed-online-endpoint a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "managed online endpoint"@en;
+  skos:hiddenLabel "Managed Online Endpoint"@en;
+  skos:broader :online-endpoint;
+  skos:editorialNote "Pilot count: appears in 91 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "An online endpoint whose serving infrastructure Azure Machine Learning provisions and manages. It's the recommended type of online endpoint."@en;
+  skos:scopeNote "Use when the managed type matters. For Kubernetes-based endpoints, say Kubernetes online endpoint."@en .
+
+:batch-endpoint a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "batch endpoint"@en;
+  skos:hiddenLabel "Batch Endpoint"@en;
+  skos:broader :endpoint;
+  skos:editorialNote "Pilot count: appears in 72 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "An endpoint that scores large amounts of data asynchronously by running a batch job."@en;
+  skos:scopeNote "Use for asynchronous, large-volume scoring. For real-time requests, use online endpoint."@en .
+
+:deployment a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "deployment"@en;
+  skos:altLabel "model deployment"@en;
+  skos:topConceptOf :scheme;
+  skos:narrower :online-deployment;
+  skos:related :endpoint, :scoring-script, :inference-server;
+  skos:editorialNote "Pilot count: appears in 246 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A set of resources and compute that hosts the model or pipeline that does the work behind an endpoint."@en;
+  skos:scopeNote "Use for what runs behind an endpoint. Don't use for the endpoint itself."@en .
+
+:online-deployment a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "online deployment"@en;
+  skos:hiddenLabel "online-deployment"@en;
+  skos:broader :deployment;
+  skos:related :online-endpoint;
+  skos:editorialNote "Pilot count: appears in 50 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A deployment that serves an online endpoint. An online endpoint can split traffic across several online deployments."@en;
+  skos:scopeNote "Use for deployments under an online endpoint."@en .
+
+:scoring-script a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "scoring script"@en;
+  skos:topConceptOf :scheme;
+  skos:related :deployment;
+  skos:editorialNote "Pilot count: appears in 55 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A Python script that loads a model and runs it on incoming data. It defines an init function and a run function."@en;
+  skos:scopeNote "Use for the user-written inference script. MLflow models don't need one."@en .
+
+:inference-server a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "inference server"@en;
+  skos:altLabel "Azure Machine Learning inference HTTP server"@en;
+  skos:hiddenLabel "inference-server"@en;
+  skos:topConceptOf :scheme;
+  skos:related :deployment;
+  skos:editorialNote "Pilot count: appears in 13 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "The Azure Machine Learning inference HTTP server, a Python package that exposes a scoring function as a local HTTP endpoint for testing and debugging."@en;
+  skos:scopeNote "Use for this package. Don't use for other servers, such as Triton Inference Server."@en .
+
+:security a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "security and networking"@en;
+  skos:topConceptOf :scheme;
+  skos:narrower :managed-identity, :service-principal, :entra-id, :network-isolation,
+    :cmk;
+  skos:editorialNote "Grouping concept created for the pilot hierarchy."@en;
+  skos:definition "Grouping of the concepts for identity, network access, and encryption."@en;
+  skos:scopeNote "Grouping concept for the pilot hierarchy. Not a product term; don't tag articles with it or use it in prose."@en .
+
+:managed-identity a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "managed identity"@en;
+  skos:hiddenLabel "Managed Identity"@en;
+  skos:broader :security;
+  skos:narrower :uami, :sami;
+  skos:editorialNote "Pilot count: appears in 96 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A Microsoft Entra identity that Azure manages for a resource, so the resource can authenticate to other services without credentials in code."@en;
+  skos:scopeNote "Use as the general term. Use system-assigned or user-assigned when the type matters."@en .
+
+:uami a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "user-assigned managed identity"@en;
+  skos:hiddenLabel "user assigned managed identity"@en;
+  skos:broader :managed-identity;
+  skos:editorialNote "Pilot count: appears in 38 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A managed identity that exists as its own Azure resource. You can assign it to one or more resources, and it remains when they're deleted."@en;
+  skos:scopeNote "Use when an article specifies this type."@en .
+
+:sami a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "system-assigned managed identity"@en;
+  skos:hiddenLabel "system assigned managed identity"@en;
+  skos:broader :managed-identity;
+  skos:editorialNote "Pilot count: appears in 27 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A managed identity created for one Azure resource. It's tied to that resource and is deleted with it."@en;
+  skos:scopeNote "Use when an article specifies this type. A workspace's system-assigned identity has the same name as the workspace."@en .
+
+:service-principal a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "service principal"@en;
+  skos:hiddenLabel "Service Principal"@en;
+  skos:broader :security;
+  skos:editorialNote "Pilot count: appears in 48 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A Microsoft Entra identity for an application or automated process, used to authenticate without user interaction."@en;
+  skos:scopeNote "Use for app identities that you create and manage. For identities Azure manages for you, use managed identity."@en .
+
+:entra-id a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "Microsoft Entra ID"@en;
+  skos:altLabel "Azure Active Directory"@en, "Azure AD"@en;
+  skos:broader :security;
+  skos:editorialNote "Pilot count: appears in 50 of 670 articles in articles/machine-learning (any label)."@en,
+    "Former product name appears in 1 article."@en;
+  skos:definition "The Microsoft cloud identity service. It's the identity provider for Azure Machine Learning."@en;
+  skos:scopeNote "Use this name. 'Azure Active Directory' and 'Azure AD' are former names; use them only when needed for clarity."@en .
+
+:network-isolation a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "network isolation"@en;
+  skos:hiddenLabel "Network Isolation"@en;
+  skos:broader :security;
+  skos:narrower :vnet, :private-endpoint;
+  skos:editorialNote "Pilot count: appears in 69 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "Restricting network access to a workspace and its associated resources so that traffic uses private networks instead of the public internet."@en;
+  skos:scopeNote "Use as the general term. Use virtual network, managed virtual network, or private endpoint for specific mechanisms."@en .
+
+:vnet a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "virtual network"@en;
+  skos:altLabel "VNet"@en;
+  skos:hiddenLabel "Virtual Network"@en;
+  skos:broader :network-isolation;
+  skos:narrower :managed-vnet;
+  skos:editorialNote "Pilot count: appears in 104 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "An Azure Virtual Network: a private network in Azure that you create and control."@en;
+  skos:scopeNote "Use for customer-created virtual networks. For the network Azure Machine Learning creates, use workspace managed virtual network."@en .
+
+:managed-vnet a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "workspace managed virtual network"@en;
+  skos:altLabel "managed virtual network"@en;
+  skos:hiddenLabel "workspace-managed virtual network"@en;
+  skos:broader :vnet;
+  skos:editorialNote "Pilot count: appears in 48 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A virtual network that Azure Machine Learning creates and manages for a workspace, to isolate its managed compute and control outbound traffic."@en;
+  skos:scopeNote "Use for the network Azure Machine Learning manages. For a network you create, use virtual network."@en .
+
+:private-endpoint a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "private endpoint"@en;
+  skos:hiddenLabel "Private Endpoint"@en;
+  skos:broader :network-isolation;
+  skos:editorialNote "Pilot count: appears in 66 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A network interface with private IP addresses in your virtual network that connects privately to an Azure service, such as a workspace or storage account."@en;
+  skos:scopeNote "Use for this Azure networking feature. Don't use for online or batch endpoints."@en .
+
+:cmk a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "customer-managed key"@en;
+  skos:hiddenLabel "customer managed key"@en;
+  skos:broader :security;
+  skos:editorialNote "Pilot count: appears in 23 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "An encryption key that you create and manage in Azure Key Vault, used instead of a Microsoft-managed key to encrypt workspace data."@en;
+  skos:scopeNote "Use when the customer controls the key. Write 'customer-managed key' with a hyphen."@en .
+
+:azure-deps a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "associated Azure resources"@en;
+  skos:topConceptOf :scheme;
+  skos:narrower :storage-account, :key-vault, :acr, :app-insights;
+  skos:related :workspace;
+  skos:editorialNote "Grouping concept created for the pilot hierarchy."@en;
+  skos:definition "Grouping of the Azure resources that a workspace uses, such as storage, a key vault, a container registry, and Application Insights."@en;
+  skos:scopeNote "Grouping concept for the pilot hierarchy. Not a product term; don't tag articles with it or use it in prose."@en .
+
+:storage-account a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "storage account"@en;
+  skos:altLabel "Azure Storage account"@en;
+  skos:hiddenLabel "Storage Account"@en;
+  skos:broader :azure-deps;
+  skos:editorialNote "Pilot count: appears in 136 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "An Azure Storage account. Each workspace has a default storage account for files such as job outputs and logs."@en;
+  skos:scopeNote "Use for the Azure resource. For the registered connection to it, use datastore."@en .
+
+:key-vault a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "Azure Key Vault"@en;
+  skos:altLabel "key vault"@en;
+  skos:broader :azure-deps;
+  skos:editorialNote "Pilot count: appears in 66 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "An Azure service that stores secrets and cryptographic keys. Each workspace uses a key vault for secrets such as credentials and connection strings."@en;
+  skos:scopeNote "Use for the Azure resource."@en .
+
+:acr a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "Azure Container Registry"@en;
+  skos:altLabel "container registry"@en;
+  skos:broader :azure-deps;
+  skos:editorialNote "Pilot count: appears in 86 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "An Azure service that stores container images. A workspace uses it for the Docker images built for environments."@en;
+  skos:scopeNote "Use for the Azure resource."@en .
+
+:app-insights a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "Application Insights"@en;
+  skos:hiddenLabel "application insights"@en;
+  skos:broader :azure-deps;
+  skos:editorialNote "Pilot count: appears in 39 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "An Azure Monitor feature that collects application telemetry. A workspace can use it to monitor deployed endpoints."@en;
+  skos:scopeNote "Use for the Azure resource."@en .
+
+:ml-task a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "machine learning task"@en;
+  skos:topConceptOf :scheme;
+  skos:narrower :image-classification, :object-detection, :forecasting, :multilabel;
+  skos:editorialNote "Grouping concept created for the pilot hierarchy."@en;
+  skos:definition "Grouping of the kinds of problems a model can be trained to solve."@en;
+  skos:scopeNote "Grouping concept for the pilot hierarchy. Not a product term; don't tag articles with it or use it in prose."@en .
+
+:image-classification a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "image classification"@en;
+  skos:hiddenLabel "Image Classification"@en;
+  skos:broader :ml-task;
+  skos:editorialNote "Pilot count: appears in 37 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A computer vision task that assigns one or more labels to an entire image."@en;
+  skos:scopeNote "Use for whole-image labeling. For locating objects within an image, use object detection."@en .
+
+:object-detection a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "object detection"@en;
+  skos:hiddenLabel "Object Detection"@en;
+  skos:broader :ml-task;
+  skos:editorialNote "Pilot count: appears in 27 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A computer vision task that finds objects in an image, marking each one with a label and a bounding box."@en;
+  skos:scopeNote "Use for locating objects. For labeling the whole image, use image classification."@en .
+
+:forecasting a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "time-series forecasting"@en;
+  skos:altLabel "forecasting"@en;
+  skos:hiddenLabel "time series forecasting"@en;
+  skos:broader :ml-task;
+  skos:editorialNote "Pilot count: appears in 30 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A task that predicts future values of a variable from its past values over time."@en;
+  skos:scopeNote "Use 'time-series forecasting' with a hyphen. 'forecasting' alone is acceptable when the context is clear."@en .
+
+:multilabel a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "multi-label classification"@en;
+  skos:hiddenLabel "multilabel classification"@en;
+  skos:broader :ml-task;
+  skos:editorialNote "Pilot count: appears in 12 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A classification task in which each item can have more than one label."@en;
+  skos:scopeNote "Use when an item can belong to several classes. When each item has exactly one class, say multiclass classification."@en .
+
+:rai a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "Responsible AI"@en;
+  skos:hiddenLabel "responsible AI"@en;
+  skos:topConceptOf :scheme;
+  skos:editorialNote "Pilot count: appears in 30 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "The practice of building AI systems that are fair, reliable and safe, private and secure, inclusive, transparent, and accountable. In Azure Machine Learning, it includes tools such as the Responsible AI dashboard."@en;
+  skos:scopeNote "Capitalize as Responsible AI when referring to the practice or the tools."@en .
+
+:dataset a skos:Concept;
+  skos:inScheme :scheme;
+  skos:prefLabel "dataset"@en;
+  skos:broader :data;
+  skos:related :data-asset;
+  skos:editorialNote "Pilot count: appears in 226 of 670 articles in articles/machine-learning (any label)."@en;
+  skos:definition "A collection of data used to train, evaluate, or run a model. A dataset can be registered in a workspace as a data asset."@en;
+  skos:scopeNote "Use for data in the general sense. For the registered workspace object, use data asset. For the SDK v1 Dataset classes, see the history note on data asset."@en .

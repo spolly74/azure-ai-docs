@@ -1,0 +1,40 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX :     <https://vocab.example.org/azure-ml/>
+
+# 1. Remove "dataset" as an alternate label of data asset, and the old draft notes
+WITH <https://vocab.example.org/azure-ml/>
+DELETE {
+  :data-asset skos:altLabel "dataset"@en .
+  :data-asset skos:editorialNote ?note .
+}
+WHERE {
+  OPTIONAL { :data-asset skos:editorialNote ?note .
+             FILTER (STRSTARTS(STR(?note), "'dataset' appears") || STRSTARTS(STR(?note), "Pilot count")) }
+} ;
+
+# 2. Add dataset as its own concept, and document both concepts
+INSERT DATA { GRAPH <https://vocab.example.org/azure-ml/> {
+  :dataset a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:prefLabel "dataset"@en ;
+    skos:broader :data ;
+    skos:related :data-asset ;
+    skos:editorialNote "Pilot count: appears in 226 of 670 articles in articles/machine-learning (any label)."@en ;
+    skos:definition "A collection of data used to train, evaluate, or run a model. A dataset can be registered in a workspace as a data asset."@en ;
+    skos:scopeNote "Use for data in the general sense. For the registered workspace object, use data asset. For the SDK v1 Dataset classes, see the history note on data asset."@en .
+  :data skos:narrower :dataset .
+
+  :data-asset skos:hiddenLabel "Data asset"@en ;
+    skos:related :dataset ;
+    skos:editorialNote "Pilot count: appears in 86 of 670 articles in articles/machine-learning (any label)."@en ;
+    skos:definition "An object registered in an Azure Machine Learning workspace that references data stored elsewhere, so jobs and users can access the data through the asset."@en ;
+    skos:scopeNote "Use only for the registered workspace object. For data in general, use dataset. Avoid describing a data asset as a connection, because connection is a separate workspace object."@en ;
+    skos:historyNote "In SDK v1 this object was called a dataset (Dataset, TabularDataset, and FileDataset classes). Some articles still say data assets were formerly known as datasets."@en .
+
+  # 3. Add the reverse direction of six related links that were loaded one-way
+  :ml-cli          skos:related :yaml-schema .
+  :endpoint        skos:related :deployment .
+  :online-endpoint skos:related :online-deployment .
+  :deployment      skos:related :scoring-script , :inference-server .
+  :workspace       skos:related :azure-deps .
+} }
