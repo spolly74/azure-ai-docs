@@ -1,0 +1,38 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX :     <https://vocab.example.org/azure-ml/>
+
+# Label convention used by the Vale rule generator:
+#   skos:altLabel    = acceptable synonym (not flagged)
+#   skos:hiddenLabel = form to flag (misspelling, casing error, or retired name)
+
+# 1. Retired names: move from altLabel to hiddenLabel so Vale flags them
+WITH <https://vocab.example.org/azure-ml/>
+DELETE {
+  :compute           skos:altLabel "compute target"@en .
+  :compute-instance  skos:altLabel "notebook VM"@en .
+  :compute-cluster   skos:altLabel "training cluster"@en .
+  :online-endpoint   skos:altLabel "real-time endpoint"@en .
+  :entra-id          skos:altLabel "Azure Active Directory"@en , "Azure AD"@en .
+  :datastore         skos:altLabel "data store"@en .
+}
+INSERT {
+  :compute           skos:hiddenLabel "compute target"@en .
+  :compute-instance  skos:hiddenLabel "notebook VM"@en .
+  :compute-cluster   skos:hiddenLabel "training cluster"@en .
+  :online-endpoint   skos:hiddenLabel "real-time endpoint"@en .
+  :entra-id          skos:hiddenLabel "Azure Active Directory"@en , "Azure AD"@en .
+  :datastore         skos:hiddenLabel "data store"@en .
+}
+WHERE {} ;
+
+# 2. Remove hidden labels that were extraction artifacts (file names, IDs)
+#    or wrong ("Virtual Network" is part of the product name Azure Virtual Network)
+DELETE DATA { GRAPH <https://vocab.example.org/azure-ml/> {
+  :online-endpoint   skos:hiddenLabel "online-endpoint"@en .
+  :pipeline-job      skos:hiddenLabel "pipeline-job"@en .
+  :online-deployment skos:hiddenLabel "online-deployment"@en .
+  :rest-api          skos:hiddenLabel "rest-api"@en .
+  :python-sdk        skos:hiddenLabel "python-sdk"@en .
+  :inference-server  skos:hiddenLabel "inference-server"@en .
+  :vnet              skos:hiddenLabel "Virtual Network"@en .
+} }

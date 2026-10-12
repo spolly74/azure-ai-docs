@@ -1,0 +1,9 @@
+# Move triples about this vocabulary that sit outside every named graph
+# into the project graph, then remove the stray copies.
+DELETE { ?s ?p ?o }
+INSERT { GRAPH <https://vocab.example.org/azure-ml/> { ?s ?p ?o } }
+WHERE {
+  ?s ?p ?o .
+  FILTER (STRSTARTS(STR(?s), "https://vocab.example.org/azure-ml/"))
+  FILTER NOT EXISTS { GRAPH ?g { ?s ?p ?o } }
+}
