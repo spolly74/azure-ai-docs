@@ -95,7 +95,6 @@
   skos:inScheme :scheme;
   skos:prefLabel "Azure Machine Learning Python SDK"@en;
   skos:altLabel "Python SDK"@en, "Azure Machine Learning SDK"@en;
-  skos:hiddenLabel "python-sdk"@en;
   skos:broader :dev-tools;
   skos:narrower :sdk-v2, :sdk-v1;
   skos:editorialNote "Pilot count: appears in 232 of 670 articles in articles/machine-learning (any label)."@en;
@@ -136,7 +135,6 @@
 :rest-api a skos:Concept;
   skos:inScheme :scheme;
   skos:prefLabel "REST API"@en;
-  skos:hiddenLabel "rest-api"@en;
   skos:broader :dev-tools;
   skos:editorialNote "Pilot count: appears in 50 of 670 articles in articles/machine-learning (any label)."@en;
   skos:definition "The HTTP interface for creating and managing Azure Machine Learning resources, jobs, and assets."@en;
@@ -156,19 +154,19 @@
 :compute a skos:Concept;
   skos:inScheme :scheme;
   skos:prefLabel "compute resource"@en;
-  skos:altLabel "compute target"@en, "compute"@en;
+  skos:altLabel "compute"@en;
   skos:topConceptOf :scheme;
   skos:narrower :compute-instance, :compute-cluster, :dsvm;
   skos:editorialNote "Pilot count: appears in 332 of 670 articles in articles/machine-learning (any label)."@en,
     "'compute target' is the older term. Confirm preferred label."@en;
   skos:definition "A designated compute resource where you run a job or host an endpoint, such as a compute cluster, a compute instance, a Kubernetes cluster, or attached compute."@en;
-  skos:scopeNote "Use as the general term. Use the narrower concepts for specific types. 'compute target' is the older term; prefer this concept."@en .
+  skos:scopeNote "Use as the general term. Use the narrower concepts for specific types. 'compute target' is the older term; prefer this concept."@en;
+  skos:hiddenLabel "compute target"@en .
 
 :compute-instance a skos:Concept;
   skos:inScheme :scheme;
   skos:prefLabel "compute instance"@en;
-  skos:altLabel "notebook VM"@en;
-  skos:hiddenLabel "Compute Instance"@en;
+  skos:hiddenLabel "Compute Instance"@en, "notebook VM"@en;
   skos:broader :compute;
   skos:editorialNote "Pilot count: appears in 131 of 670 articles in articles/machine-learning (any label)."@en,
     "'notebook VM' is a retired name (1 article)."@en;
@@ -178,8 +176,8 @@
 :compute-cluster a skos:Concept;
   skos:inScheme :scheme;
   skos:prefLabel "compute cluster"@en;
-  skos:altLabel "training cluster"@en, "AmlCompute"@en;
-  skos:hiddenLabel "Compute Cluster"@en;
+  skos:altLabel "AmlCompute"@en;
+  skos:hiddenLabel "Compute Cluster"@en, "training cluster"@en;
   skos:broader :compute;
   skos:editorialNote "Pilot count: appears in 128 of 670 articles in articles/machine-learning (any label)."@en;
   skos:definition "A managed compute resource that creates a cluster of CPU or GPU nodes in the cloud, sized to the workload. You can share it with other users in the workspace."@en;
@@ -218,8 +216,7 @@
 :datastore a skos:Concept;
   skos:inScheme :scheme;
   skos:prefLabel "datastore"@en;
-  skos:altLabel "data store"@en;
-  skos:hiddenLabel "Datastore"@en;
+  skos:hiddenLabel "Datastore"@en, "data store"@en;
   skos:broader :data;
   skos:editorialNote "Pilot count: appears in 117 of 670 articles in articles/machine-learning (any label)."@en;
   skos:definition "A reference to an existing Azure storage service that keeps the connection information, so scripts can reach the data without storing credentials in code."@en;
@@ -257,7 +254,6 @@
   skos:inScheme :scheme;
   skos:prefLabel "pipeline job"@en;
   skos:altLabel "machine learning pipeline"@en, "pipeline"@en;
-  skos:hiddenLabel "pipeline-job"@en;
   skos:broader :job;
   skos:related :component;
   skos:editorialNote "Pilot count: appears in 255 of 670 articles in articles/machine-learning (any label)."@en;
@@ -342,14 +338,13 @@
 :online-endpoint a skos:Concept;
   skos:inScheme :scheme;
   skos:prefLabel "online endpoint"@en;
-  skos:altLabel "real-time endpoint"@en;
-  skos:hiddenLabel "online-endpoint"@en;
   skos:broader :endpoint;
   skos:narrower :managed-online-endpoint;
   skos:editorialNote "Pilot count: appears in 163 of 670 articles in articles/machine-learning (any label)."@en;
   skos:related :online-deployment;
   skos:definition "An endpoint for real-time scoring that returns results in a synchronous request. Online endpoints can be managed or run on Kubernetes."@en;
-  skos:scopeNote "Use for real-time scoring. 'real-time endpoint' is an older name. For large-volume asynchronous scoring, use batch endpoint."@en .
+  skos:scopeNote "Use for real-time scoring. 'real-time endpoint' is an older name. For large-volume asynchronous scoring, use batch endpoint."@en;
+  skos:hiddenLabel "real-time endpoint"@en .
 
 :managed-online-endpoint a skos:Concept;
   skos:inScheme :scheme;
@@ -383,7 +378,6 @@
 :online-deployment a skos:Concept;
   skos:inScheme :scheme;
   skos:prefLabel "online deployment"@en;
-  skos:hiddenLabel "online-deployment"@en;
   skos:broader :deployment;
   skos:related :online-endpoint;
   skos:editorialNote "Pilot count: appears in 50 of 670 articles in articles/machine-learning (any label)."@en;
@@ -403,7 +397,6 @@
   skos:inScheme :scheme;
   skos:prefLabel "inference server"@en;
   skos:altLabel "Azure Machine Learning inference HTTP server"@en;
-  skos:hiddenLabel "inference-server"@en;
   skos:topConceptOf :scheme;
   skos:related :deployment;
   skos:editorialNote "Pilot count: appears in 13 of 670 articles in articles/machine-learning (any label)."@en;
@@ -460,12 +453,12 @@
 :entra-id a skos:Concept;
   skos:inScheme :scheme;
   skos:prefLabel "Microsoft Entra ID"@en;
-  skos:altLabel "Azure Active Directory"@en, "Azure AD"@en;
   skos:broader :security;
   skos:editorialNote "Pilot count: appears in 50 of 670 articles in articles/machine-learning (any label)."@en,
     "Former product name appears in 1 article."@en;
   skos:definition "The Microsoft cloud identity service. It's the identity provider for Azure Machine Learning."@en;
-  skos:scopeNote "Use this name. 'Azure Active Directory' and 'Azure AD' are former names; use them only when needed for clarity."@en .
+  skos:scopeNote "Use this name. 'Azure Active Directory' and 'Azure AD' are former names; use them only when needed for clarity."@en;
+  skos:hiddenLabel "Azure Active Directory"@en, "Azure AD"@en .
 
 :network-isolation a skos:Concept;
   skos:inScheme :scheme;
@@ -481,7 +474,6 @@
   skos:inScheme :scheme;
   skos:prefLabel "virtual network"@en;
   skos:altLabel "VNet"@en;
-  skos:hiddenLabel "Virtual Network"@en;
   skos:broader :network-isolation;
   skos:narrower :managed-vnet;
   skos:editorialNote "Pilot count: appears in 104 of 670 articles in articles/machine-learning (any label)."@en;
