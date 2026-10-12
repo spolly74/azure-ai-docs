@@ -1,7 +1,7 @@
 ---
 
 titleSuffix: Foundry Tools
-author:laujan
+author: laujan
 ms.service: azure-ai-services
 ms.topic: include
 ms.date: 05/14/2026

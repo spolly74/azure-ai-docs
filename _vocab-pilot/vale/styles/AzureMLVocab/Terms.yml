@@ -1,0 +1,48 @@
+# Generated from the controlled vocabulary. Do not edit by hand;
+# change the vocabulary in VocBench, export it, and regenerate.
+# Source: azure-ml-vocab.ttl
+extends: substitution
+message: "Use '%s' instead of '%s'."
+level: warning
+ignorecase: false
+action:
+  name: replace
+swap:
+  "application insights": "Application Insights"
+  "automated ml": "automated ML"
+  "Azure Machine Learning Designer": "Azure Machine Learning designer"
+  "Azure Machine Learning Studio": "Azure Machine Learning studio"
+  "Batch Endpoint": "batch endpoint"
+  "Compute Cluster": "compute cluster"
+  "Compute Instance": "compute instance"
+  "customer managed key": "customer-managed key"
+  "data science virtual machine": "Data Science Virtual Machine"
+  "Feature Store": "feature store"
+  "Image Classification": "image classification"
+  "inference-server": "inference server"
+  "Managed Identity": "managed identity"
+  "Managed Online Endpoint": "managed online endpoint"
+  "MLFlow model": "MLflow model"
+  "Mlflow model": "MLflow model"
+  "multilabel classification": "multi-label classification"
+  "Network Isolation": "network isolation"
+  "Object Detection": "object detection"
+  "online-deployment": "online deployment"
+  "online-endpoint": "online endpoint"
+  "pipeline-job": "pipeline job"
+  "Private Endpoint": "private endpoint"
+  "Prompt Flow": "prompt flow"
+  "Python SDK V2": "Python SDK v2"
+  "python-sdk": "Python SDK"
+  "responsible AI": "Responsible AI"
+  "rest-api": "REST API"
+  "SDK V1": "SDK v1"
+  "SDK V2": "SDK v2"
+  "Service Principal": "service principal"
+  "Storage Account": "storage account"
+  "system assigned managed identity": "system-assigned managed identity"
+  "time series forecasting": "time-series forecasting"
+  "user assigned managed identity": "user-assigned managed identity"
+  "Virtual Network": "virtual network"
+  "workspace-managed virtual network": "workspace managed virtual network"
+  "yaml syntax": "YAML syntax"
