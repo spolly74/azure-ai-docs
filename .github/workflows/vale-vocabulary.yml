@@ -1,0 +1,87 @@
+# Checks Azure Machine Learning articles against the controlled vocabulary
+# and reports the results in the repository's code scanning alerts.
+#
+# Vale rule:   _vocab-pilot/vale/styles/AzureMLVocab/Terms.yml
+# Generated from: _vocab-pilot/published/azure-ml-vocab.ttl (exported from VocBench)
+
+name: Vale vocabulary check
+
+on:
+  push:
+    branches: [vocab-pilot]
+    paths:
+      - "articles/machine-learning/**"
+      - "_vocab-pilot/**"
+      - ".github/workflows/vale-vocabulary.yml"
+  pull_request:
+    paths:
+      - "articles/machine-learning/**"
+      - "_vocab-pilot/**"
+      - ".github/workflows/vale-vocabulary.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  vale:
+    name: Check terminology
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write   # upload results to code scanning
+      actions: read
+      contents: read
+    env:
+      VALE_VERSION: "3.9.6"
+      VOCAB: _vocab-pilot/published/azure-ml-vocab.ttl
+      RULE: _vocab-pilot/vale/styles/AzureMLVocab/Terms.yml
+      CONFIG: _vocab-pilot/vale/.vale.ini
+      TEMPLATE: _vocab-pilot/vale/sarif.tmpl
+      TARGET: articles/machine-learning
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Fails if someone edited Terms.yml by hand or exported a new vocabulary
+      # without regenerating the rule.
+      - name: Check that the Vale rule matches the published vocabulary
+        run: |
+          pip install --quiet rdflib
+          python _vocab-pilot/vale/vocab_to_vale.py "$VOCAB" "$RUNNER_TEMP/Terms.yml"
+          if ! diff -u "$RULE" "$RUNNER_TEMP/Terms.yml"; then
+            echo "::error file=$RULE::Terms.yml doesn't match the published vocabulary. Regenerate it with vocab_to_vale.py and commit the result."
+            exit 1
+          fi
+
+      - name: Install Vale
+        run: |
+          curl -sSL "https://github.com/errata-ai/vale/releases/download/v${VALE_VERSION}/vale_${VALE_VERSION}_Linux_64-bit.tar.gz" \
+            | tar xz -C "$RUNNER_TEMP" vale
+          echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
+
+      - name: Run Vale
+        run: |
+          vale --version
+          set +e
+          vale --config "$CONFIG" --output="$TEMPLATE" "$TARGET" > vale.sarif
+          code=$?
+          set -e
+          # Exit code 1 means Vale found error-level alerts; the SARIF file is still complete.
+          # A higher code means Vale itself failed (bad config, template, or front matter).
+          if [ "$code" -gt 1 ]; then
+            echo "::error::Vale failed with exit code $code. See the step log for the error."
+            exit "$code"
+          fi
+          python -c "import json; r = json.load(open('vale.sarif'))['runs'][0]['results']; print(f'{len(r)} terminology alerts')"
+
+      - name: Upload results to code scanning
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: vale.sarif
+          category: vale-vocabulary
